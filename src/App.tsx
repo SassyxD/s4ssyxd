@@ -1,3 +1,4 @@
+// Enhanced portfolio app with improved animations and section visibility
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiMail, FiTwitter, FiArrowUp } from 'react-icons/fi';
 import Navbar from './components/Navbar';

@@ -4,6 +4,28 @@ import { FiGithub, FiLinkedin, FiMail, FiTwitter, FiArrowUp } from 'react-icons/
 import Navbar from './components/Navbar';
 import { useEffect, useState } from 'react';
 
+// Typing animation component
+const TypeWriter = ({ text, delay = 100, className = "" }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, delay);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, delay, text]);
+
+  return (
+    <span className={`${className} typing-cursor`}>
+      {displayText}
+    </span>
+  );
+};
+
 function App() {
   const { scrollYProgress } = useScroll();
   const scaleProgress = useSpring(scrollYProgress, {
@@ -11,13 +33,6 @@ function App() {
     damping: 30,
     restDelta: 0.001
   });
-
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsTypingComplete(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const scale = useTransform(scaleProgress, [0, 1], [1, 0.9]);
   const y = useTransform(scaleProgress, [0, 1], [0, 100]);
@@ -34,20 +49,20 @@ function App() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.5,
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
-        ease: [0.6, 0.05, -0.01, 0.9],
+        duration: 0.5,
+        ease: "easeOut",
       },
     },
   };
@@ -56,23 +71,16 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const roles = ["Full Stack Developer", "Designer"];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <Navbar />
 
-      <div className="container mx-auto px-4 py-16 max-w-5xl">
-        <motion.main
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-16 mt-16"
-        >
+      <div className="container mx-auto px-4 py-8 max-w-5xl mt-20">
+        <div className="space-y-16">
           {/* Hero Section */}
-          <motion.section
-            id="about"
-            className="relative"
-            style={{ scale, y }}
-          >
+          <section className="relative mb-16 pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
               <div className="md:w-1/2 text-center md:text-left space-y-6">
                 <motion.div
@@ -98,8 +106,8 @@ function App() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.2 }}
                   >
-                    <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-4 typing-cursor">
-                      s4ssyxd
+                    <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-4">
+                      <TypeWriter text="s4ssyxd" delay={150} />
                     </h2>
                     <p className="text-xl text-transparent bg-clip-text bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 font-medium">
                       Full Stack Developer & Designer
@@ -121,42 +129,29 @@ function App() {
                 />
               </motion.div>
             </div>
-          </motion.section>
+          </section>
 
           {/* About Section */}
-          <motion.section
-            className="interactive-card"
-            variants={itemVariants}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.5 }}
-          >
+          <section className="interactive-card">
             <h2 className="text-2xl font-semibold mb-6 gradient-text">About Me</h2>
             <p className="text-gray-600 leading-relaxed text-lg">
               I'm a passionate developer who loves creating beautiful and functional web applications.
               With expertise in modern web technologies, I focus on delivering exceptional user experiences
               through clean code and intuitive design.
             </p>
-          </motion.section>
+          </section>
 
           {/* Skills Section */}
-          <motion.section
-            id="skills"
-            className="grid grid-cols-1 md:grid-cols-2 gap-8"
-            variants={itemVariants}
-          >
-            <motion.div
-              className="interactive-card"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
-            >
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="interactive-card">
               <h2 className="text-2xl font-semibold mb-6 gradient-text">Skills</h2>
               <div className="flex flex-wrap gap-3">
                 {['React', 'TypeScript', 'Node.js', 'Tailwind CSS', 'GraphQL', 'Next.js'].map((skill, index) => (
                   <motion.span
                     key={skill}
                     className="skill-tag"
-                    initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.1 }}
                     whileHover={{ scale: 1.1, rotate: -5 }}
                   >
@@ -164,13 +159,9 @@ function App() {
                   </motion.span>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="interactive-card"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
-            >
+            <div className="interactive-card">
               <h2 className="text-2xl font-semibold mb-6 gradient-text">Experience</h2>
               <div className="space-y-4">
                 {['Senior Developer at Tech Corp', 'Frontend Lead at Startup Inc', 'Freelance Web Developer'].map((exp, index) => (
@@ -187,15 +178,11 @@ function App() {
                   </motion.div>
                 ))}
               </div>
-            </motion.div>
-          </motion.section>
+            </div>
+          </section>
 
           {/* Contact Section */}
-          <motion.section
-            id="contact"
-            className="text-center space-y-8"
-            variants={itemVariants}
-          >
+          <section className="text-center space-y-8 pb-16">
             <h2 className="text-2xl font-semibold gradient-text">Let's Connect</h2>
             <div className="flex justify-center gap-8">
               {socialLinks.map((link, index) => (
@@ -216,8 +203,8 @@ function App() {
                 </motion.a>
               ))}
             </div>
-          </motion.section>
-        </motion.main>
+          </section>
+        </div>
       </div>
 
       {/* Scroll Indicator */}

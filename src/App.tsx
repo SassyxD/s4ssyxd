@@ -10,15 +10,6 @@ export const ThemeContext = createContext({
   toggleDarkMode: () => { },
 });
 
-// Glitch effect for text
-const GlitchText = ({ text }) => {
-  return (
-    <div className="glitch-wrapper">
-      <div className="glitch" data-text={text}>{text}</div>
-    </div>
-  );
-};
-
 // Typing animation component
 const TypeWriter = ({ text, delay = 100, className = "" }) => {
   const [displayText, setDisplayText] = useState("");
@@ -38,90 +29,6 @@ const TypeWriter = ({ text, delay = 100, className = "" }) => {
     <span className={`${className} typing-cursor`}>
       {displayText}
     </span>
-  );
-};
-
-const DraggableItem = ({ children, className = "" }) => {
-  const controls = useAnimation();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  return (
-    <motion.div
-      className={`draggable-item ${className}`}
-      drag
-      dragMomentum={false}
-      style={{ x, y }}
-      animate={controls}
-      whileDrag={{ scale: 1.05, zIndex: 50 }}
-      onDragEnd={() => {
-        controls.start({
-          x: 0,
-          y: 0,
-          transition: {
-            type: "spring",
-            stiffness: 400,
-            damping: 20
-          }
-        });
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-const DraggableSkill = ({ skill }) => {
-  const controls = useAnimation();
-  const x = useMotionValue(0);
-
-  return (
-    <motion.div
-      className="skill-tag"
-      drag="x"
-      dragMomentum={false}
-      style={{ x }}
-      animate={controls}
-      whileDrag={{ scale: 1.05, zIndex: 50 }}
-      onDragEnd={() => {
-        controls.start({
-          x: 0,
-          transition: {
-            type: "spring",
-            stiffness: 400,
-            damping: 20
-          }
-        });
-      }}
-    >
-      {skill}
-    </motion.div>
-  );
-};
-
-// Experience item component without timeline
-const ExperienceItem = ({ experience }) => {
-  return (
-    <div className="experience-card p-4 bg-white rounded-lg shadow-md">
-      <span className="text-gray-600">{experience}</span>
-    </div>
-  );
-};
-
-// Competition item component
-const CompetitionItem = ({ competition, index }) => {
-  return (
-    <motion.div
-      className="competition-item"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.2 }}
-    >
-      <div className="flex items-center gap-3">
-        <div className="competition-icon">🏆</div>
-        <span className="text-gray-600">{competition}</span>
-      </div>
-    </motion.div>
   );
 };
 
@@ -380,16 +287,83 @@ function App() {
   ];
 
   const competitions = [
-    "🏆 1st Place - National Coding Championship 2023",
-    "🥈 2nd Place - International Hackathon Series",
-    "🌟 Best Technical Innovation - DevFest 2023",
-    "🚀 Grand Prize - Space App Challenge NASA",
-    "💡 Innovation Award - Tech Summit 2023",
-    "🎯 Winner - Algorithm Competition ICPC",
-    "🌐 1st Runner Up - Web Dev Showdown",
-    "🛠️ Best Solution - AI/ML Hackathon",
-    "🔥 Champion - Code Sprint Challenge",
-    "🎨 Most Creative Project - Design Jam"
+    {
+      title: "🏆 Grand Prize - Huawei ICT Competition 2024-2025",
+      details: "National Round (Computing Track)",
+      level: "National",
+      status: "completed",
+      priority: 1
+    },
+    {
+      title: "🌏 3rd Prize - Huawei ICT Competition 2024-2025",
+      details: "Regional Round @KLCC (Computing Track)",
+      level: "International",
+      status: "completed",
+      priority: 2
+    },
+    {
+      title: "🥉 3rd Prize - Huawei ICT Competition 2023-2024",
+      details: "National Round (Computing Track)",
+      level: "National",
+      status: "completed",
+      priority: 3
+    },
+    {
+      title: "🎖️ Honorable Mention - ETHglobal Bangkok",
+      details: "Global Blockchain Competition",
+      level: "International",
+      status: "completed",
+      priority: 4
+    },
+    {
+      title: "🚀 Final Pitch Qualified - AI Hackathon@SIT",
+      details: "The International AI Hackathon @KMUTT",
+      level: "International",
+      status: "ongoing",
+      priority: 5
+    },
+    {
+      title: "💻 Semi-Finalist - SCC Solution Hackathon",
+      details: "Banpu Track",
+      level: "National",
+      status: "completed",
+      priority: 6
+    },
+    {
+      title: "🏃‍♂️ Ongoing - National Software Contest 2025",
+      details: "NSC 2025",
+      level: "National",
+      status: "ongoing",
+      priority: 7
+    },
+    {
+      title: "🛡️ Ongoing - Cyber Warrior Hackathon 2025",
+      details: "Cybersecurity Competition",
+      level: "National",
+      status: "ongoing",
+      priority: 8
+    },
+    {
+      title: "💰 Ongoing - Hack to the Max",
+      details: "Next-gen Financial Solution",
+      level: "National",
+      status: "ongoing",
+      priority: 9
+    },
+    {
+      title: "📊 Participant - Impvest Financial Hackathon",
+      details: "Financial Innovation Competition",
+      level: "National",
+      status: "completed",
+      priority: 10
+    },
+    {
+      title: "🔧 Participant - Intania Hackathon",
+      details: "Engineering Innovation Challenge",
+      level: "University",
+      status: "completed",
+      priority: 11
+    }
   ];
 
   const achievements = [
@@ -540,12 +514,14 @@ function App() {
                 <h2 className="text-2xl font-semibold mb-6 gradient-text group-hover:text-violet-700">About Me</h2>
                 <div className={`space-y-4 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                   <p>
-                    I'm a passionate developer with a keen interest in creating beautiful and functional web applications.
-                    My journey in tech has been driven by curiosity and a desire to build things that make a difference.
+                    Yo! I'm your typical brainrot-infected Gen Z dev from KMITL's School of IT.
+                    Absolutely obsessed with crafting sick web experiences that make people go "sheesh!"
+                    My toxic trait? I can't stop thinking about clean code and pixel-perfect designs.
                   </p>
                   <p>
-                    When I'm not coding, you can find me exploring new technologies, contributing to open-source projects,
-                    or sharing knowledge with the developer community.
+                    When I'm not in my coding era, you'll catch me doom-scrolling through tech Twitter,
+                    contributing to open-source (real), or sharing my ✨hot takes✨ with the dev community.
+                    Fr fr, web dev is my passion and I'm always down to collab on something cool!
                   </p>
                 </div>
               </GlowingCard>
@@ -574,8 +550,8 @@ function App() {
             {/* Experience, Say Something, and Competitions Section */}
             <div className="grid grid-cols-12 gap-8 mb-8">
               {/* Left column - Experience and Say Something */}
-              <div className="col-span-12 md:col-span-7 space-y-8">
-                <GlowingCard id="experience" className="interactive-card group">
+              <div className="col-span-12 md:col-span-7 space-y-8 flex flex-col">
+                <GlowingCard id="experience" className="interactive-card group flex-1">
                   <h2 className="text-2xl font-semibold mb-6 gradient-text group-hover:text-violet-700">Professional Experience</h2>
                   <div className="space-y-4">
                     {experiences.map((exp, index) => (
@@ -595,7 +571,7 @@ function App() {
                 </GlowingCard>
 
                 <GlowingCard className="interactive-card group">
-                  <h2 className="text-2xl font-semibold mb-6 gradient-text group-hover:text-violet-700">Say Something</h2>
+                  <h2 className="text-2xl font-semibold mb-6 gradient-text group-hover:text-violet-700">Say or Sybau🥀</h2>
                   <div className="space-y-4">
                     <textarea
                       className="say-something-input"
@@ -622,26 +598,45 @@ function App() {
               </div>
 
               {/* Right column - Competitions */}
-              <div className="col-span-12 md:col-span-5">
-                <GlowingCard className="interactive-card group h-full">
+              <div className="col-span-12 md:col-span-5 flex">
+                <GlowingCard className="interactive-card group w-full">
                   <h2 className="text-2xl font-semibold mb-6 gradient-text group-hover:text-violet-700">
                     Competitions & Achievements
                   </h2>
-                  <div className="space-y-4 max-h-[calc(100vh-24rem)] overflow-y-auto custom-scrollbar">
-                    {competitions.map((competition, index) => (
+                  <div className="space-y-3 overflow-y-auto custom-scrollbar pr-2" style={{ maxHeight: "460px" }}>
+                    {competitions.map((comp, index) => (
                       <motion.div
                         key={index}
-                        className="competition-item"
+                        className="competition-item p-3 rounded-lg"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1 }}
                         whileHover={{ scale: 1.02 }}
                       >
-                        <div className="flex items-center gap-3">
-                          <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                            {competition}
+                        <div className="flex flex-col gap-1.5">
+                          <span className={`font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+                            {comp.title}
                           </span>
+                          <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                            {comp.details}
+                          </span>
+                          <div className="flex gap-1.5 items-center flex-wrap mt-1">
+                            <span className={`text-xs px-2 py-0.5 rounded-full ${comp.level === 'International'
+                              ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+                              : comp.level === 'National'
+                                ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                                : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+                              }`}>
+                              {comp.level}
+                            </span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full ${comp.status === 'ongoing'
+                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                              : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                              }`}>
+                              {comp.status === 'ongoing' ? '🔄 Ongoing' : '✅ Completed'}
+                            </span>
+                          </div>
                         </div>
                       </motion.div>
                     ))}

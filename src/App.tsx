@@ -3,6 +3,47 @@ import { FiGithub, FiLinkedin, FiMail, FiTwitter, FiArrowUp } from 'react-icons/
 import Navbar from './components/Navbar';
 import { useEffect, useState } from 'react';
 
+// Typing animation component
+const TypeWriter = ({ text, delay = 100, className = "" }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, delay);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, delay, text]);
+
+  return (
+    <span className={`${className} typing-cursor`}>
+      {displayText}
+    </span>
+  );
+};
+
+// Role animation component
+const AnimatedRole = ({ role, index }) => {
+  return (
+    <motion.span
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.2,
+        type: "spring",
+        stiffness: 100
+      }}
+      className="inline-block"
+    >
+      {role}
+    </motion.span>
+  );
+};
+
 function App() {
   const { scrollYProgress } = useScroll();
   const scaleProgress = useSpring(scrollYProgress, {
@@ -33,20 +74,22 @@ function App() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.5,
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+        duration: 0.5,
+        when: "beforeChildren"
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
-        ease: [0.6, 0.05, -0.01, 0.9],
+        duration: 0.5,
+        ease: "easeOut",
       },
     },
   };
@@ -55,22 +98,24 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const roles = ["Full Stack Developer", "Designer"];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-fuchsia-50 to-pink-50">
       <Navbar />
 
-      <div className="container mx-auto px-4 py-16 max-w-5xl">
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
         <motion.main
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-16 mt-16"
+          className="space-y-12 mt-8"
         >
           {/* Hero Section */}
           <motion.section
             id="about"
-            className="relative"
-            style={{ scale, y }}
+            className="relative mb-16"
+            variants={itemVariants}
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
               <div className="md:w-1/2 text-center md:text-left space-y-6">
@@ -97,11 +142,16 @@ function App() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.2 }}
                   >
-                    <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-4 typing-cursor">
-                      s4ssyxd
+                    <h2 className="text-2xl md:text-3xl font-bold gradient-text mb-4">
+                      <TypeWriter text="s4ssyxd" delay={150} />
                     </h2>
-                    <p className="text-xl text-transparent bg-clip-text bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 font-medium">
-                      Full Stack Developer & Designer
+                    <p className="text-xl text-transparent bg-clip-text bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 font-medium flex flex-wrap gap-2 justify-center md:justify-start">
+                      {roles.map((role, index) => (
+                        <>
+                          <AnimatedRole key={role} role={role} index={index} />
+                          {index < roles.length - 1 && <span>&</span>}
+                        </>
+                      ))}
                     </p>
                   </motion.div>
                 </motion.div>
@@ -144,7 +194,7 @@ function App() {
             variants={itemVariants}
           >
             <motion.div
-              className="interactive-card"
+              className="interactive-card h-full"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5 }}
             >
@@ -154,8 +204,8 @@ function App() {
                   <motion.span
                     key={skill}
                     className="skill-tag"
-                    initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.1 }}
                     whileHover={{ scale: 1.1, rotate: -5 }}
                   >
@@ -166,7 +216,7 @@ function App() {
             </motion.div>
 
             <motion.div
-              className="interactive-card"
+              className="interactive-card h-full"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5 }}
             >
@@ -192,7 +242,7 @@ function App() {
           {/* Contact Section */}
           <motion.section
             id="contact"
-            className="text-center space-y-8"
+            className="text-center space-y-8 pb-8"
             variants={itemVariants}
           >
             <h2 className="text-2xl font-semibold gradient-text">Let's Connect</h2>

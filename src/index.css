@@ -99,7 +99,7 @@
 
   .typing-cursor::after {
     content: '|';
-    @apply text-fuchsia-500;
+    @apply text-fuchsia-500 ml-0.5;
     animation: cursor-blink 1s step-end infinite;
   }
 

@@ -281,9 +281,9 @@ function App() {
   const [message, setMessage] = useState("");
 
   const experiences = [
-    'Leading development of DDEXP platform as Part-time Fullstack Developer',
+    'Training development of DDEXP Software House as Part-time Fullstack Developer',
     'Delivering high-quality solutions as Freelance Fullstack Developer on Fastwork',
-    'Contributing to blockchain infrastructure as Backend Developer at just.money'
+    'Contributing to blockchain infrastructure as Fullstack Developer at just.money'
   ];
 
   const competitions = [

@@ -288,77 +288,77 @@ function App() {
 
   const competitions = [
     {
-      title: "🏆 Grand Prize - Huawei ICT Competition 2024-2025",
+      title: "Grand Prize - Huawei ICT Competition 2024-2025",
       details: "National Round (Computing Track)",
       level: "National",
       status: "completed",
       priority: 1
     },
     {
-      title: "🌏 3rd Prize - Huawei ICT Competition 2024-2025",
+      title: "3rd Prize - Huawei ICT Competition 2024-2025",
       details: "Regional Round @KLCC (Computing Track)",
       level: "International",
       status: "completed",
       priority: 2
     },
     {
-      title: "🥉 3rd Prize - Huawei ICT Competition 2023-2024",
+      title: "3rd Prize - Huawei ICT Competition 2023-2024",
       details: "National Round (Computing Track)",
       level: "National",
       status: "completed",
       priority: 3
     },
     {
-      title: "🎖️ Honorable Mention - ETHglobal Bangkok",
+      title: "Honorable Mention - ETHglobal Bangkok",
       details: "Global Blockchain Competition",
       level: "International",
       status: "completed",
       priority: 4
     },
     {
-      title: "🚀 Final Pitch Qualified - AI Hackathon@SIT",
+      title: "Final Pitch Qualified - AI Hackathon@SIT",
       details: "The International AI Hackathon @KMUTT",
       level: "International",
       status: "ongoing",
       priority: 5
     },
     {
-      title: "💻 Semi-Finalist - SCC Solution Hackathon",
+      title: "Semi-Finalist - SCC Solution Hackathon",
       details: "Banpu Track",
       level: "National",
       status: "completed",
       priority: 6
     },
     {
-      title: "🏃‍♂️ Ongoing - National Software Contest 2025",
+      title: "Ongoing - National Software Contest 2025",
       details: "NSC 2025",
       level: "National",
       status: "ongoing",
       priority: 7
     },
     {
-      title: "🛡️ Ongoing - Cyber Warrior Hackathon 2025",
+      title: "Ongoing - Cyber Warrior Hackathon 2025",
       details: "Cybersecurity Competition",
       level: "National",
       status: "ongoing",
       priority: 8
     },
     {
-      title: "💰 Ongoing - Hack to the Max",
+      title: "Ongoing - Hack to the Max",
       details: "Next-gen Financial Solution",
       level: "National",
       status: "ongoing",
       priority: 9
     },
     {
-      title: "📊 Participant - Impvest Financial Hackathon",
+      title: "Participant - Impvest Financial Hackathon",
       details: "Financial Innovation Competition",
       level: "National",
       status: "completed",
       priority: 10
     },
     {
-      title: "🔧 Participant - Intania Hackathon",
+      title: "Participant - Intania Hackathon",
       details: "Engineering Innovation Challenge",
       level: "University",
       status: "completed",
